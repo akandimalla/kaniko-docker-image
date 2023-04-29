@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: kaniko
+  namespace: jenkins-dev
 spec:
   containers:
   - name: kubectl
@@ -24,3 +25,16 @@ spec:
         items:
           - key: .dockerconfigjson
             path: config.json
+  tolerations:
+  - key: environment
+    operator: Equal
+    value: dev
+    effect: NoSchedule
+  - key: maintener
+    operator: Equal
+    value: wkadmin
+    effect: NoSchedule
+  nodeSelector: 
+    businessunit: "gbs"
+    environment: "dev"
+    group: "wk-aws-admin"
